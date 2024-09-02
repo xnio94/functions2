@@ -70,10 +70,12 @@ def compute_cosine_similarity(embedding1, embedding2):
     return cosine_similarity(embedding1, embedding2)[0][0]
 
 def test_f():
+    start_time = time.time()
     print("embedding1....................")
     embedding1 = get_image_embedding('1.jpg')
     print("embedding2....................")
     embedding2 = get_image_embedding('2.jpg')
+    print(f'time : {time.time() - start_time}')
     v = -1
     cosine_sim = compute_cosine_similarity(embedding1[:,:v], embedding2[:,:v])
     return cosine_sim
