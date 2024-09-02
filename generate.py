@@ -62,6 +62,7 @@ def get_image_embedding(img_path):
 
     # Use the inference function to get the embedding
     embedding = infer(img_tensor)['top_dropout']
+    print('inference done')
     print(embedding.shape)
     return embedding
 
