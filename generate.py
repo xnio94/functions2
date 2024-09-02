@@ -4,7 +4,7 @@ import urllib
 
 from flask import send_file, jsonify
 
-from functions.dynamic_import import dynamic_import
+# from functions.dynamic_import import dynamic_import
 
 
 
