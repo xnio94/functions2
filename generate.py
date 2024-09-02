@@ -12,30 +12,30 @@ from functions.dynamic_import import dynamic_import
 import time
 import numpy as np
 import tensorflow as tf
-# from tensorflow.keras.applications.efficientnet import EfficientNetB0, preprocess_input
+from tensorflow.keras.applications.efficientnet import EfficientNetB0, preprocess_input
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import Model
 from sklearn.metrics.pairwise import cosine_similarity
 
-# print("Model loading Model....................")
-# start_time = time.time()
-# loaded_model = tf.saved_model.load('efficientnetb0_saved_model')
-# end_time = time.time()
-# print(f"Model loading time: {end_time - start_time} seconds")
-#
-# # To use the loaded model, you may need to wrap it in a Keras Model again
-# infer = loaded_model.signatures["serving_default"]
+print("Model loading Model....................")
+start_time = time.time()
+loaded_model = tf.saved_model.load('efficientnetb0_saved_model')
+end_time = time.time()
+print(f"Model loading time: {end_time - start_time} seconds")
+
+# To use the loaded model, you may need to wrap it in a Keras Model again
+infer = loaded_model.signatures["serving_default"]
 
 
 
 
 
-from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
-# Load the VGG16 model pre-trained on ImageNet
-base_model = VGG16(weights='imagenet')
-target_size=(224, 224)
-# Remove the top layer (classification layer) to get the feature vectors
-model = Model(inputs=base_model.input, outputs=base_model.get_layer('fc1').output)
+# from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
+# # Load the VGG16 model pre-trained on ImageNet
+# base_model = VGG16(weights='imagenet')
+# target_size=(224, 224)
+# # Remove the top layer (classification layer) to get the feature vectors
+# model = Model(inputs=base_model.input, outputs=base_model.get_layer('fc1').output)
 
 
 def get_image_embedding(img_path):
@@ -51,7 +51,7 @@ def get_image_embedding(img_path):
     print(img_array.shape)
     img_array = preprocess_input(img_array)
 
-    return model.predict(img_array)
+    # return model.predict(img_array)
 
 
     print(img_array.shape)
