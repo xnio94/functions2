@@ -77,8 +77,6 @@ def test_f():
     cosine_sim = compute_cosine_similarity(embedding1[:,:v], embedding2[:,:v])
     return cosine_sim
 
-
-
 import firebase_admin
 from firebase_admin import credentials, firestore
 
@@ -111,7 +109,7 @@ def generate(request):
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods': 'POST, OPTIONS'
     }
-    log_state = dynamic_import('log_state')
+    # log_state = dynamic_import('log_state')
 
 
     request_json = request.get_json()
