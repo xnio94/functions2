@@ -114,7 +114,7 @@ def generate(request):
 
     request_json = request.get_json()
     if request_json and 'test_f' in request_json:
-        x = test_f()
+        x = "test_f()"
         return jsonify({'test_f': float(x)}), 200, headers
 
 
