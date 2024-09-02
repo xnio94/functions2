@@ -9,73 +9,73 @@ from flask import send_file, jsonify
 
 
 
-import time
-import numpy as np
-import tensorflow as tf
-from tensorflow.keras.applications.efficientnet import EfficientNetB0, preprocess_input
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.models import Model
-from sklearn.metrics.pairwise import cosine_similarity
-
-print("Model loading Model....................")
-start_time = time.time()
-loaded_model = tf.saved_model.load('efficientnetb0_saved_model')
-end_time = time.time()
-print(f"Model loading time: {end_time - start_time} seconds")
-
-# To use the loaded model, you may need to wrap it in a Keras Model again
-infer = loaded_model.signatures["serving_default"]
-
-
-
-
-
-# from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
-# # Load the VGG16 model pre-trained on ImageNet
-# base_model = VGG16(weights='imagenet')
-# target_size=(224, 224)
-# # Remove the top layer (classification layer) to get the feature vectors
-# model = Model(inputs=base_model.input, outputs=base_model.get_layer('fc1').output)
-
-
-def get_image_embedding(img_path):
-    # Load the image with the target size of 224x224
-    print(img_path)
-    img = image.load_img(img_path, target_size=(224, 224))
-    print(img)
-    # print(len(img))
-    img_array = image.img_to_array(img)
-    print(img_array.shape)
-    # Expand dimensions to match the model's input shape
-    img_array = np.expand_dims(img_array, axis=0)
-    print(img_array.shape)
-    img_array = preprocess_input(img_array)
-
-    # return model.predict(img_array)
-
-
-    print(img_array.shape)
-
-    # Convert the image array to a tensor
-    img_tensor = tf.convert_to_tensor(img_array)
-    print(img_tensor.shape)
-
-    # Use the inference function to get the embedding
-    embedding = infer(img_tensor)['top_dropout']
-    print(embedding.shape)
-    return embedding
-
-def compute_cosine_similarity(embedding1, embedding2):
-    return cosine_similarity(embedding1, embedding2)[0][0]
-
-def test_f():
-    print("embedding1....................")
-    embedding1 = get_image_embedding('1.jpg')
-    print("embedding2....................")
-    embedding2 = get_image_embedding('2.jpg')
-    v = -1
-    cosine_sim = compute_cosine_similarity(embedding1[:,:v], embedding2[:,:v])
-    return cosine_sim
+# import time
+# import numpy as np
+# import tensorflow as tf
+# from tensorflow.keras.applications.efficientnet import EfficientNetB0, preprocess_input
+# from tensorflow.keras.preprocessing import image
+# from tensorflow.keras.models import Model
+# from sklearn.metrics.pairwise import cosine_similarity
+#
+# print("Model loading Model....................")
+# start_time = time.time()
+# loaded_model = tf.saved_model.load('efficientnetb0_saved_model')
+# end_time = time.time()
+# print(f"Model loading time: {end_time - start_time} seconds")
+#
+# # To use the loaded model, you may need to wrap it in a Keras Model again
+# infer = loaded_model.signatures["serving_default"]
+#
+#
+#
+#
+#
+# # from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
+# # # Load the VGG16 model pre-trained on ImageNet
+# # base_model = VGG16(weights='imagenet')
+# # target_size=(224, 224)
+# # # Remove the top layer (classification layer) to get the feature vectors
+# # model = Model(inputs=base_model.input, outputs=base_model.get_layer('fc1').output)
+#
+#
+# def get_image_embedding(img_path):
+#     # Load the image with the target size of 224x224
+#     print(img_path)
+#     img = image.load_img(img_path, target_size=(224, 224))
+#     print(img)
+#     # print(len(img))
+#     img_array = image.img_to_array(img)
+#     print(img_array.shape)
+#     # Expand dimensions to match the model's input shape
+#     img_array = np.expand_dims(img_array, axis=0)
+#     print(img_array.shape)
+#     img_array = preprocess_input(img_array)
+#
+#     # return model.predict(img_array)
+#
+#
+#     print(img_array.shape)
+#
+#     # Convert the image array to a tensor
+#     img_tensor = tf.convert_to_tensor(img_array)
+#     print(img_tensor.shape)
+#
+#     # Use the inference function to get the embedding
+#     embedding = infer(img_tensor)['top_dropout']
+#     print(embedding.shape)
+#     return embedding
+#
+# def compute_cosine_similarity(embedding1, embedding2):
+#     return cosine_similarity(embedding1, embedding2)[0][0]
+#
+# def test_f():
+#     print("embedding1....................")
+#     embedding1 = get_image_embedding('1.jpg')
+#     print("embedding2....................")
+#     embedding2 = get_image_embedding('2.jpg')
+#     v = -1
+#     cosine_sim = compute_cosine_similarity(embedding1[:,:v], embedding2[:,:v])
+#     return cosine_sim
 
 import firebase_admin
 from firebase_admin import credentials, firestore
