@@ -77,11 +77,8 @@ from flask import send_file, jsonify
 #     cosine_sim = compute_cosine_similarity(embedding1[:,:v], embedding2[:,:v])
 #     return cosine_sim
 
-import firebase_admin
-from firebase_admin import credentials, firestore
 
-cred = credentials.Certificate("service-account.json")
-firebase_admin.initialize_app(cred)
+from firebase_admin import firestore
 db = firestore.client()
 
 
